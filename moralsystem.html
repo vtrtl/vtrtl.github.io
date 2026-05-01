@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Morals Simulation System</title>
+
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: white;
+  }
+
+  header {
+    text-align: center;
+    padding: 25px;
+    background: #1e293b;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .panel {
+    background: #111827;
+    width: 90%;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #cbd5e1;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #2563eb;
+  }
+
+  .output {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+  }
+
+  .box {
+    flex: 1;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .ethical {
+    background: #14532d;
+  }
+
+  .unethical {
+    background: #7f1d1d;
+  }
+
+  .processing {
+    display: none;
+    margin-top: 10px;
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  .small {
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Morals Simulation System</h1>
+  <p class="small">Input data → system processes → moral vs immoral outcomes</p>
+</header>
+
+<div class="container">
+<div class="panel">
+
+  <label>Select System Type</label>
+  <select id="scenario" onchange="updateForm()">
+    <option value="hiring">AI Hiring System</option>
+    <option value="privacy">Data Collection System</option>
+    <option value="social">Social Media Algorithm</option>
+    <option value="facial">Facial Recognition System</option>
+  </select>
+
+  <div id="formArea"></div>
+
+  <button onclick="runSystem()">Submit Data</button>
+
+  <div class="processing" id="processing">Processing data...</div>
+
+  <div class="output">
+    <div class="box ethical">
+      <h3>✅ Moral Output</h3>
+      <p id="ethicalResult">No data processed yet</p>
+    </div>
+
+    <div class="box unethical">
+      <h3>❌ immoral Output</h3>
+      <p id="unethicalResult">No data processed yet</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+
+function updateForm() {
+  let s = document.getElementById("scenario").value;
+  let form = document.getElementById("formArea");
+
+  if (s === "hiring") {
+    form.innerHTML = `
+      <label>Name</label>
+      <input id="name" type="text">
+
+      <label>Age</label>
+      <input id="age" type="number">
+
+      <label>Experience (years)</label>
+      <input id="exp" type="number">
+    `;
+  }
+
+  if (s === "privacy") {
+    form.innerHTML = `
+      <label>Email</label>
+      <input id="email" type="text">
+
+      <label>Interest</label>
+      <input id="interest" type="text">
+    `;
+  }
+
+  if (s === "social") {
+    form.innerHTML = `
+      <label>Search Topic</label>
+      <input id="topic" type="text">
+    `;
+  }
+
+  if (s === "facial") {
+    form.innerHTML = `
+      <label>Location</label>
+      <input id="location" type="text">
+    `;
+  }
+}
+
+updateForm();
+
+function runSystem() {
+  document.getElementById("processing").style.display = "block";
+
+  setTimeout(() => {
+    let s = document.getElementById("scenario").value;
+
+    if (s === "hiring") {
+      let age = document.getElementById("age").value;
+      let exp = document.getElementById("exp").value;
+
+      document.getElementById("ethicalResult") =
+        document.getElementById("ethicalResult").innerText =
+        exp >= 2 ? "Candidate selected based on skills" : "Candidate rejected due to low experience";
+
+      document.getElementById("unethicalResult").innerText =
+        age < 25 ? "Candidate selected (age preference bias)" : "Candidate rejected (age discrimination)";
+    }
+
+    if (s === "privacy") {
+      let interest = document.getElementById("interest").value;
+
+      document.getElementById("ethicalResult").innerText =
+        "Data stored securely and not shared";
+
+      document.getElementById("unethicalResult").innerText =
+        "Data sold to advertisers → ads about " + interest;
+    }
+
+    if (s === "social") {
+      let topic = document.getElementById("topic").value;
+
+      document.getElementById("ethicalResult").innerText =
+        "Balanced, factual content shown about " + topic;
+
+      document.getElementById("unethicalResult").innerText =
+        "Extreme / misleading content boosted for engagement";
+    }
+
+    if (s === "facial") {
+      let location = document.getElementById("location").value;
+
+      document.getElementById("ethicalResult").innerText =
+        "Facial recognition used with consent in " + location;
+
+      document.getElementById("unethicalResult").innerText =
+        "People tracked without consent in " + location;
+    }
+
+    document.getElementById("processing").style.display = "none";
+
+  }, 1000);
+}
+
+</script>
+
+</body>
+</html>
