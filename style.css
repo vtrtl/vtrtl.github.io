@@ -1,0 +1,53 @@
+p2 { 
+    font-size: 35px;
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    color: aliceblue;
+    align-items: center;
+    height: 200px;
+    width: 400px;
+}
+.landingpage {
+    color: white;
+    align-items: center;
+    height: 200px;
+    width: 400px;
+    background: black;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    font-size: 75px;
+}
+body {
+    background-color: black;
+    align-items: center;
+
+}
+.socialmedia {
+    font-size: 35px;
+    position: fixed;
+    top: 75%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    color: aliceblue;
+    align-items: center;
+    height: 200px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    clear: left;
+    flex-direction: row;
+}
+.aboutme {
+    color: white;
+}
+.hr {
+    color: white;
+}
