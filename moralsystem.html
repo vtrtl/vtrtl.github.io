@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI Ethics Simulator</title>
+<title>Morals Simulator</title>
 
 <style>
   body {
@@ -94,7 +94,7 @@
 <body>
 
 <header>
-  <h1>AI Moral Information Processing Simulator</h1>
+  <h1>Moral Information Processing Simulator</h1>
 </header>
 
 <div class="container">
@@ -113,7 +113,7 @@
   <div class="toggle">
     <label>
       <input type="checkbox" id="ethicalMode" checked>
-      Ethical Mode ON
+      Moral processing mode
     </label>
   </div>
 
@@ -202,25 +202,25 @@ function runSystem() {
       if (ethical) {
         lastDecision = "Data stored securely";
       } else {
-        lastDecision = "Data sold → ads about " + interest;
+        lastDecision = "Data sold -> ads about " + interest;
       }
     }
     if (currentScenario === "social") {
       let topic = document.getElementById("topic").value;
 
       if (ethical) {
-        lastDecision = "Balanced content about " + topic;
+        lastDecision = "Balanced, truthful and reliable content about " + topic;
       } else {
-        lastDecision = "Extreme content promoted for engagement";
+        lastDecision = "Engagement-bait content shown";
       }
     }
     if (currentScenario === "facial") {
       let location = document.getElementById("location").value;
 
       if (ethical) {
-        lastDecision = "Used with consent in " + location;
+        lastDecision = "Used for security purposes AND with consent in " + location;
       } else {
-        lastDecision = "Tracking without consent in " + location;
+        lastDecision = "Tracking and monitored without consent in " + location;
       }
     }
 
