@@ -2,28 +2,172 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vtrtl | Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
+    <title>vtrtl | dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body align="center">
-    <div align="center">
-<div class="landingpage" align="center" >
-<center><p1>vtrtl</p1></center>
-</div>
-<center><p2>a coder learning to code.</p2></center>
-<div class="socialmedia" >
-<center><a href="https://discord.com/channels/@me/730905406146347149" style="text-decoration: none;" target="_blank">
-    <img src="../img/discord.png" alt="My Discord Profile" height="60px" width="60px">
-    <a href="https://x.com/vtrtldev" style="text-decoration: none;" target="_blank">
-        <img src="../img/twitter.png" alt="My X Profile" height="60px" width="60px" display="none" style="text-decoration: none">
-        <a href="mailto:vtrtl@vtrtl.dev ">
-            <img class="circle" src="../img/realmail.png" alt="Email me here" height="60px" width="60px" display="none"></center>
+<body>
+    <div class="ambient-bg">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
     </div>
-</a>
-</div>
-<script src="../app.js"></script>
+    <nav>
+        <div class="nav-logo" id="vtrtl-title">vtrtl</div>
+        <div class="nav-links">
+            <button class="nav-item active" onclick="navigate('home', this)">home</button>
+            <button class="nav-item" onclick="navigate('about', this)">about</button>
+            <button class="nav-item" onclick="navigate('projects', this)">projects</button>
+        </div>
+    </nav>
+
+    <main>  
+        <section id="home" class="page active">
+            <h1 class="glitch">vtrtl</h1>
+            <div class="subtitle">><span id="typewriter"></span><span class="cursor">_</span></div>
+            
+            <div class="socials">
+                <a href="https://discord.com/users/1105562605164187731" target="_blank">[ discord ]</a>
+                <a href="mailto:vtrtl@vtrtl.dev">[ email ]</a>
+                <a href="https://x.com/vtrtldev" target="_blank">[ x ]</a>
+            </div>
+        </section>
+        <section id="about" class="page text-content">
+            <h2 class="section-title">About Me</h2>
+            <p>I'm a student developer who is learning Python and JavaScript and figuring out how to be as productively lazy as possible.</p>
+            <p>Currently, I split my time between studying mathematics and computer science or learning to write code. I prefer an abstract, minimalist aesthetic, without unnecessary clutter.</p>
+            <p>When I'm not studying, I'm usually experimenting with software logic or being lazy.</p>
+        </section>
+        <section id="projects" class="page">
+            <h2 class="section-title">Deployed Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Bean with a dream</h3>
+                    <p>A custom 2D platformer game currently in development featuring a rule-based adaptive difficulty system built entirely in Python.</p>
+                </div>
+                <div class="project-card">
+                    <h3>-</h3>
+                    <p>TODO: update and go through project list</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="secret-screen">
+        <div id="particles-container"></div>
+        <div class="secret-content">
+            <div class="secret-title">/// SYSTEM_OVERRIDE : EASTER_EGG ///</div>
+            <div class="secret-message neon-glow">Hi Ellie!! 💚</div>
+            <button class="fancy-btn" onclick="closeSecret()">[ RETURN TO ROOT ]</button>
+        </div>
+    </div>
+
+    <script>
+        function navigate(pageId, btnElement) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+        
+        const words = [
+            "a coder learning to code", 
+            "im pretty much always lazy",
+            "how cool is this"
+        ];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeTarget = document.getElementById("typewriter");
+        function type() {
+            if (!document.getElementById('home').classList.contains('active')) {
+                setTimeout(type, 500);
+                return;
+            }
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                charIndex--;
+            } else {
+                charIndex++;
+            }
+            typeTarget.textContent = currentWord.substring(0, charIndex);
+            let typeSpeed = isDeleting ? 30 : 100;
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; 
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500; 
+            }
+            setTimeout(type, typeSpeed);
+        }
+        const secretCode = 'ellie';
+        let pressedKeys = [];
+        window.addEventListener('keyup', (e) => {
+            pressedKeys.push(e.key.toLowerCase());
+            pressedKeys.splice(-secretCode.length - 1, pressedKeys.length - secretCode.length);
+            
+            if (pressedKeys.join('').includes(secretCode)) {
+                triggerEasterEgg();
+                pressedKeys = []; 
+            }
+        });
+        let tapCount = 0;
+        let tapTimer;
+        document.getElementById('vtrtl-title').addEventListener('click', () => {
+            tapCount++;
+            clearTimeout(tapTimer); 
+
+            if (tapCount >= 5) {
+                triggerEasterEgg();
+                tapCount = 0; 
+            }
+            tapTimer = setTimeout(() => {
+                tapCount = 0;
+            }, 2000);
+        });
+        function triggerEasterEgg() {
+            const screen = document.getElementById('secret-screen');
+            screen.classList.add('show');
+            createParticles();
+        }
+        function closeSecret() {
+            const screen = document.getElementById('secret-screen');
+            screen.classList.remove('show');
+            setTimeout(() => {
+                document.getElementById('particles-container').innerHTML = '';
+            }, 500); 
+        }
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            container.innerHTML = '';
+            const particleCount = 40;
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                let size = Math.random() * 8 + 4; 
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + 'vw';
+                let duration = Math.random() * 4 + 3;
+                particle.style.animationDuration = duration + 's';
+                particle.style.animationDelay = (Math.random() * 2) + 's';
+                if(Math.random() > 0.3) {
+                    particle.style.background = '#ff00ea';
+                    particle.style.boxShadow = '0 0 10px #ff00ea, 0 0 20px #ff00ea';
+                } else {
+                    particle.style.background = '#00ff66';
+                    particle.style.boxShadow = '0 0 10px #00ff66, 0 0 20px #00ff66';
+                }
+                
+                container.appendChild(particle);
+            }
+        }
+        window.onload = () => setTimeout(type, 800);
+    </script>
 </body>
 </html>
